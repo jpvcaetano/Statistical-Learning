@@ -1,6 +1,5 @@
 function [ outM ] = LogTransform( inM )
-%UNTITLED2 Summary of this function goes here
-%   Detailed explanation goes here
 
+outM = log(inM + 0.1);
 
 end

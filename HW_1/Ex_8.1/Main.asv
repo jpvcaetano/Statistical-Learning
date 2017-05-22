@@ -7,27 +7,25 @@ choice = 'Which type of preprocessing should be done?\n (1) 0 mean and unit vari
 x = input(choice);
 if x == 1
     Xtrain = Standertize(Xtrain);
-    Xtest = Standertize(Xtest);
+    Xtest = Standertize(Xtrain);
 elseif x == 2
      Xtrain = LogTransform(Xtrain);   
-     Xtest = LogTransform(Xtest); 
 elseif x == 3
      Xtrain = Binarize(Xtrain);
-     Xtest = Binarize(Xtest);
 end
     
 Xtrain = [ones(size(Xtrain,1),1), Xtrain];
-Xtest = [ones(size(Xtest,1),1), Xtest];
+
 %% Cross-Validation to retrieve the best lambda
 
-train_set_partition = 10;
+train_set_partition = 5;
 k = randperm(size(Xtrain,1));
 Xtrain = Xtrain(k,:);
 ytrain = ytrain(k,:);
 
 threshold = 1e-10;
 lambdas = [];
-imin = -3;
+imin = -5;
 imax = 3;
 progression = 1;
 
@@ -63,7 +61,7 @@ end
 figure 
 plot(imin:imax, errors)
 xlabel('lambda = 10^x')
-ylabel('mean error rate in validation')
+ylabel('error in validation')
 
 [min_error_validation, indice] = min(errors);
 best_lambda = flambda(imin+(indice-1)*progression);
